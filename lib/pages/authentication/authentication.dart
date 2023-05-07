@@ -119,36 +119,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  CustomText(
-                    text: isLoginScreen
-                        ? "If you do not want to create an account "
-                        : "You can use fake information",
-                    color: lightGray,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  CustomText(
-                    text: isLoginScreen
-                        ? "you can use the next demo account: "
-                        : "to test the app. The information",
-                    color: lightGray,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  CustomText(
-                    text: isLoginScreen
-                        ? "test@email.com, 123456"
-                        : "will be stored in Firebase.",
-                    color: lightGray,
-                  ),
-                ],
-              ),
+
               const SizedBox(
                 height: 15,
               ),
@@ -342,17 +313,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
                     try {
                       //custom auth
-                      var result = await userSignup(
-                        registerController.usernameController!.text,
-                        registerController.emailController.text,
-                        registerController.passwordController.text);
+                      // var result = await userSignup(
+                      //     registerController.usernameController!.text,
+                      //     registerController.emailController.text,
+                      //     registerController.passwordController.text);
 
-                      var msg = result['msg'];
+                      // var msg = result['msg'];
 
                       //firebase auth
-                      /*var result = await registerWithEmailPassword(
+                      var result = await registerWithEmailPassword(
                           registerController.emailController.text,
-                          registerController.passwordController.text);*/
+                          registerController.passwordController.text);
 
                       var snackbar = SnackBar(
                           width: 500,
@@ -366,14 +337,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                           closeIconColor: Colors.white,
                           backgroundColor:
                               //custom auth
-                              msg != Constants.customRegisterOk
-                                  //firebase auth
-                                  //result != Constants.registerOk
+                              // msg != Constants.customRegisterOk
+                              //firebase auth
+                              result != Constants.registerOk
                                   ? Colors.redAccent
                                   : Colors.green,
                           content: Center(
                             child: Text(
-                              msg,
+                              "Register ${result == Constants.registerOk ? 'Success' : 'Failed'}!",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -383,9 +354,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
                       //custom auth
-                      if (msg == Constants.customRegisterOk) {
-                        //firebase auth
-                        //if (result == Constants.registerOk) {
+                      // if (msg == Constants.customRegisterOk) {
+                      //firebase auth
+                      if (result == Constants.registerOk) {
                         isLoginScreen = true;
                       }
                     } catch (e) {
@@ -454,20 +425,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
                     try {
                       //custom auth
-                      var result = await userLogin(
-                        registerController.emailController.text,
-                        registerController.passwordController.text);
+                      // var result = await userLogin(
+                      //   registerController.emailController.text,
+                      //   registerController.passwordController.text);
 
-                      var msg = result['msg'];
-                      var token = result['token'];
+                      // var msg = result['msg'];
+                      // var token = result['token'];
 
                       //save token in a cookie
-                      CookieManager().addCookie(Constants.cookieName, token);
+                      // CookieManager().addCookie(Constants.cookieName, token);
 
                       //firebase auth
-                      /*var result = await signInWithEmailPassword(
+                      var result = await signInWithEmailPassword(
                           registerController.emailController.text,
-                          registerController.passwordController.text);*/
+                          registerController.passwordController.text);
 
                       var snackbar = SnackBar(
                           width: 500,
@@ -481,14 +452,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                           closeIconColor: Colors.white,
                           backgroundColor:
                               //custom auth
-                              msg != Constants.loginOk
-                                  //firebase auth
-                                  //result != Constants.loginOk
+                              // msg != Constants.loginOk
+                              //firebase auth
+                              result != Constants.loginOk
                                   ? Colors.redAccent
                                   : Colors.green,
                           content: Center(
                             child: Text(
-                              msg,
+                              "logged in ${result == Constants.loginOk ? 'Success' : 'Failed'}!",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -498,11 +469,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
                       //custom auth
-                      if (msg == Constants.loginOk) {
-                        //firebase auth
-                        //if (result == Constants.loginOk) {
+                      // if (msg == Constants.loginOk) {
+                      //firebase auth
+                      if (result == Constants.loginOk) {
                         menuController
-                        .changeActiveItemTo(overViewPageDisplayName);
+                            .changeActiveItemTo(overViewPageDisplayName);
                         Get.offAllNamed(rootRoute);
                       }
                     } catch (e) {
@@ -553,79 +524,26 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               const SizedBox(
                 height: 15,
               ),
-              RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                  text: isLoginScreen
-                      ? "Want to create your own account?   "
-                      : "Already have an account?   ",
-                ),
-                TextSpan(
-                    text: isLoginScreen ? "Register! " : "Log In!",
-                    style: TextStyle(color: active),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        setState(() {
-                          isLoginScreen = !isLoginScreen;
-                        });
-                      })
-              ])),
+              // RichText(
+              //     text: TextSpan(children: [
+              //   TextSpan(
+              //     text: isLoginScreen
+              //         ? "Want to create your own account?   "
+              //         : "Already have an account?   ",
+              //   ),
+              //   TextSpan(
+              //       text: isLoginScreen ? "Register! " : "Log In!",
+              //       style: TextStyle(color: active),
+              //       recognizer: TapGestureRecognizer()
+              //         ..onTap = () {
+              //           setState(() {
+              //             isLoginScreen = !isLoginScreen;
+              //           });
+              //         })
+              // ])),
               const SizedBox(
                 height: 15,
               ),
-              isLoginScreen
-                  ? const Center(
-                      child: Text(
-                      "-   Or   -",
-                      style: TextStyle(color: Colors.grey),
-                    ))
-                  : const SizedBox(
-                      height: 1,
-                    ),
-              const SizedBox(
-                height: 15,
-              ),
-              isLoginScreen
-                  ? Center(
-                      child: SignInButton(
-                      Buttons.Google,
-                      text: "Sign in with Google",
-                      onPressed: () {
-                        signInWithGoogle().then((result) {
-                          if (result != null) {
-                            menuController
-                                .changeActiveItemTo(overViewPageDisplayName);
-                            Get.offAllNamed(rootRoute);
-                          }
-                        }).catchError((e) {
-                          var snackbar = const SnackBar(
-                              width: 500,
-                              padding: EdgeInsets.all(10),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              duration: Duration(seconds: 3),
-                              dismissDirection: DismissDirection.horizontal,
-                              closeIconColor: Colors.white,
-                              backgroundColor: Colors.redAccent,
-                              content: Center(
-                                child: Text(
-                                  "Error, please try again later!",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ));
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        });
-                      },
-                    ))
-                  : const SizedBox(
-                      height: 1,
-                    ),
             ],
           ),
         ),
